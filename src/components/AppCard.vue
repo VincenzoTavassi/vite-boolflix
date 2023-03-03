@@ -8,7 +8,9 @@ export default {
     titolo: String,
     originale: String,
     lingua: String,
-    copertina: String,
+    retrocopertina: String,
+    frontecopertina: String,
+    overview: String,
   },
   computed: {
     linguaOriginale() {
@@ -35,31 +37,64 @@ export default {
 };
 </script>
 <template>
-  <div>
-    <img :src="`${baseImgUri}${copertina}`" alt="" class="my-2" />
-    <h2>
-      {{ titolo }}
-    </h2>
-    <CardStars :starsCounter="stars" />
-    <p>Titolo originale: {{ originale }}</p>
-    <p>
-      Lingua originale:
-      <img
-        :src="baseFlagUri + linguaOriginale + '.png'"
-        :alt="linguaOriginale"
-      />
-    </p>
+  <div class="card d-flex flex-column">
+    <div class="fronte">
+      <img :src="`${baseImgUri}${frontecopertina}`" alt="" />
+    </div>
+    <div class="retro">
+      <img :src="`${baseImgUri}${retrocopertina}`" alt="" class="my-2" />
+      <div class="description">
+        <h2>
+          {{ titolo }}
+        </h2>
+        <CardStars :starsCounter="stars" />
+        <p>Titolo originale: {{ originale }}</p>
+        <p>
+          Lingua originale:
+          <img
+            :src="baseFlagUri + linguaOriginale + '.png'"
+            :alt="linguaOriginale"
+          />
+        </p>
+        <p>Descrizione: {{ overview }}</p>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
-div {
-  background-color: #333;
-  color: white;
-  padding: 20px;
-  text-align: center;
+img {
+  max-width: 100%;
+}
+
+.card {
+  height: 500px;
+  border: 2px solid white;
+  &:hover {
+    .fronte {
+      display: none;
+    }
+    .retro {
+      display: block;
+    }
+  }
+}
+
+.fronte {
   flex-grow: 1;
   img {
-    max-width: 100%;
+    min-height: 100%;
+  }
+}
+.retro {
+  background-color: black;
+  color: white;
+  text-align: center;
+  min-height: 100%;
+  display: none;
+  overflow: auto;
+
+  .description {
+    padding: 10px;
   }
 }
 </style>

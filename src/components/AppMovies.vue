@@ -19,13 +19,15 @@ export default {
   },
   methods: {
     fetchMovies(query) {
+      store.isLoading = true;
       axios
         .get(
           `${store.baseUri}movie?api_key=${store.apiKey}&query=${query}&language=it`
         )
         .then((response) => {
           store.movies = response.data.results;
-        });
+        })
+        .finally(() => (store.isLoading = false));
     },
   },
 };
@@ -43,11 +45,12 @@ export default {
             :titolo="movie.title"
             :lingua="movie.original_language"
             :stars="movie.vote_average"
-            :copertina="movie.backdrop_path"
+            :retrocopertina="movie.backdrop_path"
+            :frontecopertina="movie.poster_path"
+            :overview="movie.overview"
           />
         </div>
       </div>
     </div>
   </section>
 </template>
-<style></style>

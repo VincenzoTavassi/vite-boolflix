@@ -25,6 +25,7 @@ export default {
       v-for="star in emptyStars"
       icon="fa-solid fa-star"
     />
+    <div class="me-1">Voto medio: {{ starsCounter }}</div>
   </div>
 </template>
 <style scoped lang="scss">

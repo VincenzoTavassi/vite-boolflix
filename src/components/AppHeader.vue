@@ -1,33 +1,27 @@
 <script>
+import SearchBar from "./SearchBar.vue";
 export default {
   emits: ["search-action"],
-  data() {
-    return {
-      searchTerm: "",
-    };
+  components: { SearchBar },
+  methods: {
+    sendSearch(query) {
+      this.$emit("search-action", query);
+    },
   },
 };
 </script>
 <template>
   <header>
-    <nav class="d-flex justify-content-between">
-      <p>logo</p>
-      <div>
-        <input type="text" v-model="searchTerm" />
-        <button
-          class="btn btn-primary"
-          @click="$emit('search-action', searchTerm)"
-        >
-          Cerca
-        </button>
-      </div>
-    </nav>
+    <div class="container d-flex align-items-center justify-content-between">
+      <p class="text-danger fw-bold fs-1">BOOLFLIX</p>
+      <SearchBar @search="sendSearch" />
+    </div>
   </header>
 </template>
 <style scoped lang="scss">
 header {
-  height: 200px;
-  background-color: #333;
+  height: 100px;
+  background-color: black;
   color: white;
   display: flex;
   align-items: center;
