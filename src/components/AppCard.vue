@@ -67,7 +67,7 @@ img {
 }
 
 .card {
-  height: 500px;
+  min-height: 500px;
   border: 2px solid white;
   &:hover {
     .fronte {

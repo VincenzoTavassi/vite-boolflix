@@ -17,12 +17,19 @@ export default {
       aria-label="Recipient's username"
       aria-describedby="button-addon2"
       v-model="cerca"
+      @keyup.enter="
+        $emit('search', cerca);
+        cerca = '';
+      "
     />
     <button
       class="btn btn-primary"
       type="button"
       id="button-addon2"
-      @click="$emit('search', cerca)"
+      @click="
+        $emit('search', cerca);
+        cerca = '';
+      "
     >
       Cerca
     </button>
