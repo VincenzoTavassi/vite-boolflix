@@ -33,7 +33,9 @@ export default {
 <template>
   <section>
     <div class="container">
-      <h2 v-if="store.movies.length > 0">Film trovati:</h2>
+      <h2 v-if="store.movies.length > 0">
+        {{ store.movies.length }} film trovati:
+      </h2>
       <div class="row row-cols-4 justify-content-center">
         <div v-for="movie in store.movies" class="p-2 d-flex flex-column">
           <AppCard

@@ -15,6 +15,12 @@ export default {
       // modifico parametro lingua inglese per l'api delle bandiere
       if (this.lingua == "en") {
         return "gb";
+      } else if (this.lingua == "ja") {
+        return "jp";
+      } else if (this.lingua == "ko") {
+        return "kr";
+      } else if (this.lingua == "zh") {
+        return "cn";
       } else {
         return this.lingua;
       }

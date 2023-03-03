@@ -1,6 +1,5 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import AppCard from "./components/AppCard.vue";
 import AppMovies from "./components/AppMovies.vue";
 import AppSeries from "./components/AppSeries.vue";
 
@@ -23,10 +22,9 @@ export default {
 <template>
   <AppHeader @search-action="getSearchTerm" />
   <main>
-    <h1>Risultati di ricerca</h1>
     <AppMovies :cercaquesto="receivedSearchTerm"></AppMovies>
     <hr />
-    <AppSeries></AppSeries>
+    <AppSeries :cercaquesto="receivedSearchTerm"></AppSeries>
   </main>
 </template>
 
