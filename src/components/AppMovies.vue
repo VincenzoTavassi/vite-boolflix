@@ -41,6 +41,7 @@ export default {
             :titolo="movie.title"
             :lingua="movie.original_language"
             :stars="movie.vote_average"
+            :copertina="movie.backdrop_path"
           />
         </div>
       </div>

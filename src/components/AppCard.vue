@@ -1,11 +1,18 @@
 <script>
 import CardStars from "./CardStars.vue";
+import { store } from "../data/store";
 export default {
   components: { CardStars },
-  props: { stars: Number, titolo: String, originale: String, lingua: String },
+  props: {
+    stars: Number,
+    titolo: String,
+    originale: String,
+    lingua: String,
+    copertina: String,
+  },
   computed: {
     linguaOriginale() {
-      // modifico parametro per l'api delle bandiere
+      // modifico parametro lingua inglese per l'api delle bandiere
       if (this.lingua == "en") {
         return "gb";
       } else {
@@ -13,18 +20,27 @@ export default {
       }
     },
   },
+  data() {
+    return {
+      baseImgUri: "https://image.tmdb.org/t/p/w342",
+      baseFlagUri: "https://flagcdn.com/w40/",
+    };
+  },
 };
 </script>
 <template>
   <div>
-    <h2>{{ titolo }}</h2>
+    <img :src="`${baseImgUri}${copertina}`" alt="" class="my-2" />
+    <h2>
+      {{ titolo }}
+    </h2>
     <CardStars :starsCounter="stars" />
     <p>Titolo originale: {{ originale }}</p>
     <p>
       Lingua originale:
       <img
-        :src="'https://flagcdn.com/w40/' + linguaOriginale + '.png'"
-        alt=""
+        :src="baseFlagUri + linguaOriginale + '.png'"
+        :alt="linguaOriginale"
       />
     </p>
   </div>
@@ -36,5 +52,8 @@ div {
   padding: 20px;
   text-align: center;
   flex-grow: 1;
+  img {
+    max-width: 100%;
+  }
 }
 </style>
