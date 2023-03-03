@@ -20,7 +20,9 @@ export default {
   methods: {
     fetchMovies(query) {
       axios
-        .get(`${store.baseUri}movie?api_key=${store.apiKey}&query=${query}`)
+        .get(
+          `${store.baseUri}movie?api_key=${store.apiKey}&query=${query}&language=it`
+        )
         .then((response) => {
           store.movies = response.data.results;
         });
@@ -30,15 +32,17 @@ export default {
 </script>
 <template>
   <section>
-    <h2 v-if="store.movies.length > 0">Film trovati:</h2>
-    <div class="row row-cols-4 g-2 justify-content-center">
-      <div v-for="movie in store.movies" class="p-2">
-        <AppCard
-          :originale="movie.original_title"
-          :titolo="movie.title"
-          :lingua="movie.original_language"
-          :stars="movie.vote_average"
-        />
+    <div class="container">
+      <h2 v-if="store.movies.length > 0">Film trovati:</h2>
+      <div class="row row-cols-4 justify-content-center">
+        <div v-for="movie in store.movies" class="p-2 d-flex flex-column">
+          <AppCard
+            :originale="movie.original_title"
+            :titolo="movie.title"
+            :lingua="movie.original_language"
+            :stars="movie.vote_average"
+          />
+        </div>
       </div>
     </div>
   </section>
