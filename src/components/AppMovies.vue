@@ -1,8 +1,10 @@
 <script>
+import AppCard from "./AppCard.vue";
 import { store } from "../data/store";
 import axios from "axios";
 export default {
   props: { cercaquesto: String },
+  components: { AppCard },
   data() {
     return {
       store,
@@ -28,14 +30,15 @@ export default {
 </script>
 <template>
   <section>
-    <div class="row row-cols-4">
-      <div v-for="movie in store.movies">
-        <h2>
-          {{ movie.original_title }}
-        </h2>
-        <p>{{ movie.title }}</p>
-        <p>{{ movie.original_language }}</p>
-        <p>{{ movie.vote_average }}</p>
+    <h2 v-if="store.movies.length > 0">Film trovati:</h2>
+    <div class="row row-cols-4 g-2 justify-content-center">
+      <div v-for="movie in store.movies" class="p-2">
+        <AppCard
+          :originale="movie.original_title"
+          :titolo="movie.title"
+          :lingua="movie.original_language"
+          :stars="movie.vote_average"
+        />
       </div>
     </div>
   </section>
