@@ -31,14 +31,12 @@ export default {
       let lista = [];
       // RITORNA SOLO I PRIMI 5 ATTORI
       for (let i = 0; i < 5; i++) {
-        if (this.attori && this.attori.length > 0) {
-          let attore = this.attori[i].name + "," + " ";
-          if (i == 4) {
-            // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
-            attore = this.attori[i].name + ".";
-          }
-          lista.push(attore);
+        let attore = this.attori[i].name + "," + " ";
+        if (i == 4) {
+          // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
+          attore = this.attori[i].name + ".";
         }
+        lista.push(attore);
       }
       return lista;
     },
@@ -80,7 +78,7 @@ export default {
           />
         </p>
         <p>Descrizione: {{ overview }}</p>
-        <p v-if="attori && attori.length > 0">
+        <p v-if="attori">
           Cast:
           <span v-for="attore in listaAttori"> {{ attore }}</span>
         </p>
