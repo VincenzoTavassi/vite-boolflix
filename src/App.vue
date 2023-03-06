@@ -1,12 +1,11 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import AppMovies from "./components/AppMovies.vue";
-import AppSeries from "./components/AppSeries.vue";
+import AppSearch from "./components/AppSearch.vue";
 import AppLoader from "./components/AppLoader.vue";
 import { store } from "./data/store";
 
 export default {
-  components: { AppHeader, AppMovies, AppSeries, AppLoader },
+  components: { AppHeader, AppSearch, AppLoader },
   data() {
     return {
       receivedSearchTerm: "",
@@ -27,9 +26,9 @@ export default {
   <AppHeader @search-action="getSearchTerm" />
   <main class="py-3">
     <div v-if="!store.isLoading">
-      <AppMovies :cercaquesto="receivedSearchTerm"></AppMovies>
+      <AppSearch :cercaquesto="receivedSearchTerm" :tipo="'movie'" />
       <hr v-if="receivedSearchTerm" />
-      <AppSeries :cercaquesto="receivedSearchTerm"></AppSeries>
+      <AppSearch :cercaquesto="receivedSearchTerm" :tipo="'series'" />
     </div>
     <div v-else>
       <AppLoader />

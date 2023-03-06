@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     linguaOriginale() {
-      // modifico parametro lingua inglese per l'api delle bandiere
+      // modifico parametro lingua per l'api delle bandiere
       if (this.lingua == "en") {
         return "gb";
       } else if (this.lingua == "ja") {
@@ -31,12 +31,14 @@ export default {
       let lista = [];
       // RITORNA SOLO I PRIMI 5 ATTORI
       for (let i = 0; i < 5; i++) {
-        let attore = this.attori[i].name + "," + " ";
-        if (i == 4) {
-          // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
-          attore = this.attori[i].name + ".";
+        if (this.attori && this.attori.length > 0) {
+          let attore = this.attori[i].name + "," + " ";
+          if (i == 4) {
+            // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
+            attore = this.attori[i].name + ".";
+          }
+          lista.push(attore);
         }
-        lista.push(attore);
       }
       return lista;
     },
