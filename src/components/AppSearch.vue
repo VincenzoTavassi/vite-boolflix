@@ -47,6 +47,30 @@ export default {
               });
               // Aggiorna l'array originario
               store.movies = movies;
+
+              // Aggiungo i generi a ciascun film
+              const movieGenres = store.movies.map((film) => {
+                let generi = [];
+                film.genre_ids.forEach((id, indice) => {
+                  // Per ogni genre_ids nel film specifico
+                  store.movieGenres.forEach((genere) => {
+                    // controlla in ogni tipo di genere salvato
+                    let genreName;
+                    if (
+                      id == genere.id &&
+                      indice + 1 == film.genre_ids.length // Se è l'ultimo della lista aggiungi il punto
+                    ) {
+                      genreName = genere.name + ".";
+                    } else if (id == genere.id) {
+                      genreName = genere.name + "," + " "; // Altrimenti aggiungi virgola e spazio
+                    }
+                    generi.push(genreName);
+                  });
+                });
+                return { ...film, generi }; // ritorna l'oggetto film con i generi
+              });
+              // Aggiorno l'array originario
+              store.movies = movieGenres;
             });
           })
           .finally(() => (store.isLoading = false));
@@ -86,6 +110,31 @@ export default {
       // console.log(qualcosa);
       // console.log("**********");
     },
+    fetchGenres(type) {
+      if (type == "movie") {
+        axios
+          .get(
+            `${store.baseUri}genre/movie/list?api_key=${store.apiKey}&language=it`
+          )
+          .then((response) => {
+            store.movieGenres = response.data.genres;
+            // console.log(store.movieGenres);
+          });
+      } else if (type == "series") {
+        axios
+          .get(
+            `${store.baseUri}genre/tv/list?api_key=${store.apiKey}&language=it`
+          )
+          .then((response) => {
+            store.seriesGenres = response.data.genres;
+            // console.log(store.seriesGenres);
+          });
+      }
+    },
+  },
+  created() {
+    this.fetchGenres("movie");
+    this.fetchGenres("series");
   },
 };
 </script>
@@ -105,6 +154,7 @@ export default {
               :frontecopertina="movie.poster_path"
               :overview="movie.overview"
               :attori="movie.attori"
+              :generi="movie.generi"
             />
           </div>
         </div>

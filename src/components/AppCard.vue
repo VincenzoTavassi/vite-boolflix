@@ -11,6 +11,7 @@ export default {
     frontecopertina: String,
     overview: String,
     attori: Object,
+    generi: Array,
   },
   computed: {
     linguaOriginale() {
@@ -32,7 +33,7 @@ export default {
       // RITORNA SOLO I PRIMI 5 ATTORI
       for (let i = 0; i < 5 && i < this.attori.length; i++) {
         let attore = this.attori[i].name + "," + " ";
-        if (i == 4 || this.attori.length) {
+        if (i == 4 || i == this.attori.length) {
           // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
           attore = this.attori[i].name + ".";
         }
@@ -81,6 +82,9 @@ export default {
         <p v-if="attori">
           Cast:
           <span v-for="attore in listaAttori"> {{ attore }}</span>
+        </p>
+        <p>
+          Generi: <span v-for="genere in generi">{{ genere }}</span>
         </p>
       </div>
     </div>
