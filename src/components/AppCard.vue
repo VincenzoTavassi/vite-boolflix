@@ -1,6 +1,5 @@
 <script>
 import CardStars from "./CardStars.vue";
-import { store } from "../data/store";
 export default {
   components: { CardStars },
   props: {
@@ -11,6 +10,7 @@ export default {
     retrocopertina: String,
     frontecopertina: String,
     overview: String,
+    attori: Object,
   },
   computed: {
     linguaOriginale() {
@@ -26,6 +26,27 @@ export default {
       } else {
         return this.lingua;
       }
+    },
+    listaAttori() {
+      let lista = [];
+      // RITORNA SOLO I PRIMI 5 ATTORI
+      for (let i = 0; i < 5; i++) {
+        let attore = this.attori[i].name + "," + " ";
+        if (i == 4) {
+          // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
+          attore = this.attori[i].name + ".";
+        }
+        lista.push(attore);
+      }
+      return lista;
+    },
+  },
+  methods: {
+    logga(qualcosa) {
+      //   console.log("**********");
+      //   console.log(qualcosa);
+      //   console.log("**********");
+      // },
     },
   },
   data() {
@@ -57,6 +78,10 @@ export default {
           />
         </p>
         <p>Descrizione: {{ overview }}</p>
+        <p v-if="attori && attori.length > 0">
+          Cast:
+          <span v-for="attore in listaAttori"> {{ attore }}</span>
+        </p>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ export default {
       store.isLoading = true;
       axios
         .get(
-          `${store.baseUri}tv?api_key=${store.apiKey}&query=${query}&language=it`
+          `${store.baseUri}search/tv?api_key=${store.apiKey}&query=${query}&language=it`
         )
         .then((response) => {
           store.series = response.data.results;

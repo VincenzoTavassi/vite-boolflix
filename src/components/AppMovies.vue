@@ -2,6 +2,7 @@
 import AppCard from "./AppCard.vue";
 import { store } from "../data/store";
 import axios from "axios";
+import { isProxy, toRaw } from "vue";
 export default {
   props: { cercaquesto: String },
   components: { AppCard },
@@ -22,12 +23,36 @@ export default {
       store.isLoading = true;
       axios
         .get(
-          `${store.baseUri}movie?api_key=${store.apiKey}&query=${query}&language=it`
+          `${store.baseUri}search/movie?api_key=${store.apiKey}&query=${query}&language=it`
         )
         .then((response) => {
-          store.movies = response.data.results;
+          store.movies = response.data.results; // Salva tutti i film
+          // Crea un array di richieste Axios per gli attori
+          const requests = store.movies.map((movie) =>
+            axios.get(
+              `${store.baseUri}movie/${movie.id}/credits?api_key=${store.apiKey}&language=it`
+            )
+          );
+          // Una volta ricevute tutte le risposte
+          axios.all(requests).then((responses) => {
+            // Crea un nuovo array con il risultato delle risposte e
+            // la nuova proprietà attori
+            const movies = responses.map((risultato, indice) => {
+              return {
+                ...response.data.results[indice],
+                attori: risultato.data.cast,
+              };
+            });
+            // Aggiorna l'array originario
+            store.movies = movies;
+          });
         })
         .finally(() => (store.isLoading = false));
+    },
+    logga(qualcosa) {
+      // console.log("**********");
+      // console.log(qualcosa);
+      // console.log("**********");
     },
   },
 };
@@ -48,6 +73,7 @@ export default {
             :retrocopertina="movie.backdrop_path"
             :frontecopertina="movie.poster_path"
             :overview="movie.overview"
+            :attori="movie.attori"
           />
         </div>
       </div>
