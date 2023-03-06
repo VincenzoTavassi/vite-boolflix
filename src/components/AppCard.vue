@@ -30,9 +30,9 @@ export default {
     listaAttori() {
       let lista = [];
       // RITORNA SOLO I PRIMI 5 ATTORI
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 5 && i < this.attori.length; i++) {
         let attore = this.attori[i].name + "," + " ";
-        if (i == 4) {
+        if (i == 4 || this.attori.length) {
           // SE E' L'ULTIMO DELLA LISTA, AGGIUNGI IL PUNTO
           attore = this.attori[i].name + ".";
         }
