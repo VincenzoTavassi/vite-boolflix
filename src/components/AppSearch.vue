@@ -127,11 +127,6 @@ export default {
           .finally(() => (store.isLoading = false));
       }
     },
-    logga(qualcosa) {
-      // console.log("**********");
-      // console.log(qualcosa);
-      // console.log("**********");
-    },
     fetchGenres(type) {
       if (type == "movie") {
         axios
@@ -140,7 +135,6 @@ export default {
           )
           .then((response) => {
             store.movieGenres = response.data.genres;
-            // console.log(store.movieGenres);
           });
       } else if (type == "series") {
         axios
@@ -149,7 +143,6 @@ export default {
           )
           .then((response) => {
             store.seriesGenres = response.data.genres;
-            // console.log(store.seriesGenres);
           });
       }
     },
@@ -182,7 +175,7 @@ export default {
         </div>
       </div>
       <div v-if="store.series.length > 0 && tipo == 'series'">
-        <h2>{{ store.movies.length }} Serie trovate:</h2>
+        <h2>{{ store.series.length }} Serie trovate:</h2>
         <div class="row row-cols-4 justify-content-center">
           <div v-for="serie in store.series" class="p-2 d-flex flex-column">
             <AppCard
@@ -202,3 +195,8 @@ export default {
     </div>
   </section>
 </template>
+<style scoped>
+section {
+  padding-top: 150px;
+}
+</style>
