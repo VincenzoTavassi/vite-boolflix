@@ -2,7 +2,6 @@
 import AppCard from "./AppCard.vue";
 import { store } from "../data/store";
 import axios from "axios";
-import { isProxy, toRaw } from "vue";
 export default {
   props: { cercaquesto: String, tipo: String },
   components: { AppCard },
@@ -57,12 +56,12 @@ export default {
                     // controlla in ogni tipo di genere salvato
                     let genreName;
                     if (
-                      id == genere.id &&
-                      indice + 1 == film.genre_ids.length // Se è l'ultimo della lista aggiungi il punto
+                      id == genere.id && // Se sono uguali e
+                      indice + 1 == film.genre_ids.length // se è l'ultimo della lista aggiungi il punto
                     ) {
                       genreName = genere.name + ".";
                     } else if (id == genere.id) {
-                      genreName = genere.name + "," + " "; // Altrimenti aggiungi virgola e spazio
+                      genreName = genere.name + "," + " "; // Altrimenti se sono uguali aggiungi virgola e spazio
                     }
                     generi.push(genreName);
                   });
@@ -100,6 +99,29 @@ export default {
               });
               // Aggiorna l'array originario
               store.series = series;
+              // Aggiungo i generi a ciascuna serie
+              const seriesGenres = store.series.map((serie) => {
+                let generi = [];
+                serie.genre_ids.forEach((id, indice) => {
+                  // Per ogni genre_ids nella serie specifica
+                  store.seriesGenres.forEach((genere) => {
+                    // controlla in ogni tipo di genere salvato
+                    let genreName;
+                    if (
+                      id == genere.id && // Se sono uguali e
+                      indice + 1 == serie.genre_ids.length // se è l'ultimo della lista aggiungi il punto
+                    ) {
+                      genreName = genere.name + ".";
+                    } else if (id == genere.id) {
+                      genreName = genere.name + "," + " "; // Altrimenti se sono uguali aggiungi virgola e spazio
+                    }
+                    generi.push(genreName);
+                  });
+                });
+                return { ...serie, generi }; // ritorna l'oggetto film con i generi
+              });
+              // Aggiorno l'array originario
+              store.series = seriesGenres;
             });
           })
           .finally(() => (store.isLoading = false));
@@ -172,6 +194,7 @@ export default {
               :frontecopertina="serie.poster_path"
               :overview="serie.overview"
               :attori="serie.attori"
+              :generi="serie.generi"
             />
           </div>
         </div>
